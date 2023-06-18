@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ contact.first_name }} {{ contact.last_name }}</h1>
+    <p>Email: {{ contact.email }}</p>
+    <p>Phone: {{ contact.phone_number }}</p>
+    <p>Message: {{ contact.message }}</p>
+    <a href="{% url 'contact_update' contact.pk %}" class="btn btn-primary">Edit</a>
+    <form method="post" action="{% url 'contact_delete' contact.pk %}" style="display: inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+    </form>
+{% endblock %}

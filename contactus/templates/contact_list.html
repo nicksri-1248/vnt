@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Contacts</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.first_name }}</td>
+                    <td>{{ contact.last_name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phone_number }}</td>
+                    <td>{{ contact.message }}</td>
+                    <td>
+                        <a href="{% url 'contact_detail' contact.pk %}" class="btn btn-info">View</a>
+                        <a href="{% url 'contact_update' contact.pk %}" class="btn btn-primary">Edit</a>
+                        <form method="post" action="{% url 'contact_delete' contact.pk %}" style="display: inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No contacts found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'contact_create' %}" class="btn btn-success">Add Contact</a>
+{% endblock %}
